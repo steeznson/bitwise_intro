@@ -1,48 +1,56 @@
 /*
-Bitwise intro
+Simple bitwise operation calculator
 */
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
+struct OpMap {
+    char is_and[3], is_or[2], is_sleft[5], is_sright[6];
+};
+
 int main(int argv, char* argc[]){
-    if (!(argv == 2)){
-        puts("Enter provide one operation argument");
+    // force correct positional args
+    if (!(argv == 3)){
+        puts("Enter provide an operation argument");
+        puts("and a numerical value.");
+        puts("Accepted operation args: and or sleft sright.");
         exit(1);
     }
+    int value = atoi(argc[2]);
     int length = strlen(argc[1]);
     char *op = (char*) malloc(length*sizeof(char));
-    strcpy(op, argc[1]);
-    char is_and[3] = "and";
-    char is_or[2] = "or";
-    char is_sleft[5] = "sleft";
-    char is_sright[6] = "sright";
+    struct OpMap op_map = {"and", "or", "sleft", "sright"};
 
-    if (strcmp(op, is_and) <= 0){
-        puts("&");
+    // save op choice and parrot input
+    strcpy(op, argc[1]);
+    printf("You entered '%s'\n", op);
+
+    // print results
+    if (strcmp(op, op_map.is_and) <= 0){
+        puts("Computed symbol &");
         for (int i = 0; i < 10; ++i){
-            printf("%d & 1 = %d\n", i, i & 1);
+            printf("%d & %d = %d\n", i, value, i & value);
         }
-    } else if (strcmp(op, is_or) <= 0){
-        puts("|");
+    } else if (strcmp(op, op_map.is_or) <= 0){
+        puts("Computed symbol |");
         for (int i = 0; i < 10; ++i){
-            printf("%d | 1 = %d\n", i, i | 1);
+            printf("%d | %d = %d\n", i, value, i | value);
         }
-    } else if (strcmp(op, is_sleft) <= 0){
-        puts("<<");
+    } else if (strcmp(op, op_map.is_sleft) <= 0){
+        puts("Computed symbol <<");
         for (int i = 0; i < 10; ++i){
-            printf("%d << 1 = %d\n", i, i << 1);
+            printf("%d << %d = %d\n", i, value, i << value);
         }
-    } else if (strcmp(op, is_sright) <= 0){
-        puts(">>");
+    } else if (strcmp(op, op_map.is_sright) <= 0){
+        puts("Computed symbol >>");
         for (int i = 0; i < 10; ++i){
-            printf("%d >> 1 = %d\n", i, i >> 1);
+            printf("%d >> %d = %d\n", i, value, i >> value);
         }
-    } else {
-        printf("You entered '%s'\n", op);
-        puts("Must be one of: and or sleft sright");
     }
+
+    // tidy up
     free(op);
     return 0;
 }
