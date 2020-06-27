@@ -10,21 +10,21 @@ struct OpMap {
     char is_and[3], is_or[2], is_sleft[5], is_sright[6];
 };
 
-int main(int argv, char* argc[]){
+int main(int argc, char* argv[]){
     // force correct positional args
-    if (!(argv == 3)){
+    if (argc != 3){
         puts("Enter provide an operation argument");
         puts("and a numerical value.");
         puts("Accepted operation args: and or sleft sright.");
         exit(1);
     }
-    int value = atoi(argc[2]);
-    int length = strlen(argc[1]);
+    int value = atoi(argv[2]);
+    int length = strlen(argv[1]);
     char *op = (char*) malloc(length*sizeof(char));
     struct OpMap op_map = {"and", "or", "sleft", "sright"};
 
     // save op choice and parrot input
-    strcpy(op, argc[1]);
+    strcpy(op, argv[1]);
     printf("You entered '%s'\n", op);
 
     // print results
